@@ -9,14 +9,14 @@
 </head>
 <body>
     <div id="all">
-        <div id="nav">
+        <div class='stuck' id="nav">
             <div id="search">
                     <input  type="search" 
                             id="search-input" 
                             name="query"
                             placeholder=" Search for a movie or phrase... "
                             aria-label="Look for movies matching string">
-                <button id="clearButton" title="clearSearch" onclick="forClearButton()">Close search</button>
+                <button class='button' id="clearButton" title="clearSearch" onclick="closeSearch()">Close search</button>
             </div>
             
             <h1 id="siteTitle" >FLIXSTER</h1>
@@ -27,23 +27,18 @@
 
         <div id="content">
             <div id="movies-grid"></div>
-            <div id="allSearchMovies"></div>
+            <div id="searchResults-grid"></div>
         </div>
 
-        <div id="footer">
-            <div id="movieButtonDiv">
-                <button class='button' id='load-more-movies-btn' type="button" onclick="loadPage()">More movies</button>
-            </div>
-        
-            <div id="searchButtonDiv">
+        <div class='stuck' id="footer">
+                <button class='button' id='load-more-movies-btn' type="button" onclick="loadPage()">More movies</button>        
                 <button class='button' id='searchButton' type="button" onclick="loadSearchPage()">More search results</button>
-            </div>
         </div>
     </div>
-    <div id="trailerCard">
-        <div id="popup">
 
-        </div>
+    <div id="trailerPopup">
+        <iframe id="trailer" src="about:blank"></iframe>
+        <button class='button' id='trailerButton' type="button">Close trailer</button>
     </div>
     
     <script src="script.js"></script>

@@ -1,48 +1,53 @@
 html, body {
     margin: 0px;
-    padding: 0px;
     background-color: #202327;
 
     font-size: 20px;
     font-family: system-ui,-apple-system,"SF Pro Display","Segoe UI",sans-serif !important;
     -webkit-font-smoothing: antialiased;
     font-weight: 300;
-
 }
 
 div {
-    display:grid;
-}
-
-#trailerCard {
-    display: none;
-    place-items: center;
-    background-color: rgba(255, 255, 255, 0.9);
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    z-index: 10;
-    top: 0;
-}
-
-
-.embeddedVideo {
-    margin:auto;
-    margin-top: 20px;
     display: grid;
-    place-items: center;
-    height: 50%;
-    width: 50%;
-    border-radius: 7px;
-
 }
 
-#movies-grid, #allSearchMovies{
+/* styling title, header and  footer of site */
+#siteTitle {
+    grid-template-columns: minmax(200px, auto);
+    text-align: center;
+    color: #fff;
+    font-family: monospace;
+    letter-spacing: 12px;
+    margin-top: 0px;
+}
+
+.stuck {
+    position: sticky; 
+    z-index: 5;
+    background-color: rgb(69, 68, 67);
+    padding: 15px 10px 15px 10px;
+    opacity: 0.95;
+}
+
+#nav {
+    grid-template-columns: repeat(3, 1fr);
+    top: 0;
+    border-radius: 0% 0% 7px 7px;
+}
+
+#footer {
+    grid-template-columns: 1fr;
+    bottom: 0px;
+    border-radius: 7px 7px 0% 0% ;
+}
+
+/* styling overall movie layout as well as each movie's poster, rating, and title */
+#movies-grid, #searchResults-grid {
     padding: 10px;
     justify-items: center;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 }
-
 
 .movie-card{
     grid-template-rows: 7fr 1fr;
@@ -67,7 +72,7 @@ div {
     margin: 0px 2px auto auto;
 }
 
-
+/* styling the overview display over each movie's poster*/
 .imgWrapper {
     position:relative;
     overflow:hidden;
@@ -93,9 +98,7 @@ div {
 
     background: rgba(255, 255, 255, .6);
     color:rgb(26, 25, 25);
-
 }
-
 
 .imgWrapper > .movie-poster, .img-wrapper > .overview {
   transition: 150ms ease-in-out;
@@ -108,23 +111,23 @@ div {
 .imgWrapper > .overview.fade {
   opacity: 0;
 }
+
 .imgWrapper:hover > .overview.fade {
   opacity: 1;
 }
 
+/* styling scroll button */
 #scrollDiv {
     margin-right: 10px;
 }
 
-.searchForm {
-    /* width: 347px; */
-    /* margin: auto; */
-    vertical-align: middle;
-    
+/* styling search form area*/
+#search {
+    display: inline-flex;
 }
 
-#search {
-    display:inline;
+.searchForm {
+    vertical-align: middle;
 }
 
 #search-input {
@@ -132,87 +135,44 @@ div {
     height: 40px;
     border-radius: 2em 0 0 2em;
     text-align: center;
-    font-size:15px;
-    margin-right: 0px;
-
+    font-size: 15px;
+    border: 0px;
+    border-right: 1px solid; 
 }
 
+/* styling scroll, search clear, trailer close, top movies, and search movies buttons*/
 .button {
     width: 200px;
     height: 40px;
-    text-decoration:none; 
-    border-radius: 2em;
-    min-width: 300px;
-    font-size:15px;
-    text-align: center; 
-    margin-top: 20px;
+    font-size: 15px;
     border: 0px;
+    border-radius: 2em;
 }
 
 #scrollButton {
     margin-left: auto;
     margin-right: 0px;
-    border: 0px;
     margin-top: 0px;
 }
 
 #clearButton {
-    height: 36px;
-    margin:0px;
     width: 100px;
-    text-decoration:none; 
+    height: 40px;
+    margin: 0px;
     border-radius: 0 2em 2em 0;
-    font-size:15px;
-    text-align: center; 
-    border: 0px;
 }
 
-
-.popupButton {
-    display: grid;
-    width: 200px;
-    height: 40px;
-    text-decoration:none; 
-    border-radius: 2em;
-    min-width: 300px;
-    font-size:15px;
-    text-align: center; 
-    border: 0px;
-    background-color: #202327;
-    color:#fff;
-    margin: auto;
-    place-items: center;
-
+#trailerButton {
+    background-color: rgb(207, 200, 200);
+    margin: 15px;
+    float: right;
 }
 
 #load-more-movies-btn, #searchButton {
+    display: grid;
+    place-items: center;
     margin-left: auto;
     margin-right: auto;
-}
-
-#load-more-movies-btn:hover, #searchButton:hover, #scrollButton:hover, .videoButton:hover, .popupButton:hover{
-    color: #fff;;
-    background-color:#9d9999;
-    border-color: #fff;
-    border-width: 2px;
-}
-
-.videoButton {
-    background-color: #fff;
-    width: 140px;
-    height: 25px;
-    text-decoration:none; 
-    border-radius: 2em;
-    font-size:15px;
-    text-align: center; 
-    margin: 0px auto;
-}
-
-#siteTitle {
-    color: #fff;
-    font-family: monospace;
-    letter-spacing: 12px;
-    margin-top: 0px;
 }
 
 .disabled {
@@ -220,37 +180,28 @@ div {
     cursor: not-allowed;
 }
 
-#siteTitle {
-    grid-template-columns: minmax(200px, auto);
-    text-align: center;
+#load-more-movies-btn:hover, #clearButton:hover, #searchButton:hover, #scrollButton:hover, #trailerButton:hover{
+    color: #fff;;
+    background-color:#9d9999;
+    border-color: #fff;
+    border-width: 2px;
 }
 
-#nav {
-    grid-template-columns: repeat(3, 1fr);
-    position: sticky; 
+/* styling for movie trailer popup */
+#trailerPopup { 
+    display: block;
+    background-color: rgba(255, 255, 255, 0.96);
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
     top: 0;
-    z-index: 5;
-    background-color: rgb(69, 68, 67);
-    padding: 15px 10px 15px 10px;
-    border-radius: 0% 0% 7px 7px;
-    opacity: 0.95;
-}
-@media (max-width: 400) {
-    nav {
-        display: flex;
-    }
-  }
-
-#footer {
-    grid-template-columns: 1fr;
-    position: sticky;
-    bottom: 0px;
-    z-index: 5;
-    background-color: rgb(69, 68, 67);
-    padding: 15px 10px 15px 10px;
-    border-radius: 7px 7px 0% 0% ;
-    opacity: 0.95;
-
 }
 
+#trailer {
+    place-items: center;
+    height: 80%;
+    width: 80%;
+    margin: 18px;
+}
 

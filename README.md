@@ -4,7 +4,7 @@ Submitted by: Nicole Stiles
 
 Estimated time spent: 24hrs
 
-Deployed Application (optional): [Flixster Deployed Site](ADD_LINK_HERE)
+Deployed Application: [Flixster Deployed Site](https://ncstiles.github.io/)
 
 ### Application Features
 
@@ -32,11 +32,10 @@ Deployed Application (optional): [Flixster Deployed Site](ADD_LINK_HERE)
 
 #### STRETCH FEATURES
 
-- [ ] Deploy website using GitHub Pages. 
-- [x] Allow user to view more details about a movie within an opaque card.
+- [x] Deploy website using GitHub Pages. 
 - [x] Improve the user experience through CSS & animation (I implemented fade and opacity, and transition time).
 - [x] Allow movie video trailers to be played using [embedded YouTube](https://support.google.com/youtube/answer/171780?hl=en)
-- [ ] Implement anything else that you can get done to improve the app functionality!
+- [x] Implement anything else that you can get done to improve the app functionality (overview in opaque card)
 
 ### Walkthrough Video
 
@@ -50,7 +49,7 @@ Yes!  The topics definitely prepared us.  The API lesson was very helpful.  Ther
 
 * If you had more time, what would you have done differently? Would you have added additional features? Changed the way your project responded to a particular event, etc.
   
-If I had more time, I would spend more time making the website reactive, as well as work no the CSS alignment properties.
+If I had more time, I would spend more time making the website reactive, as well as work no the CSS alignment properties.  I would like to also add a loading button before movie posters render on the page, as well as explore displaying different video types if the trailer doesn't exist.  I would also like to implement a scoll up button, and work on the movie display so that there aren't missing movie positions due to fixed size pagination.  
 
 * Reflect on your project demo, what went well? Were there things that maybe didn't go as planned? Did you notice something that your peer did that you would like to try next time?
 
