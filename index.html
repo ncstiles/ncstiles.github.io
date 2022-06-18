@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLIXSTER</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="all">
+        <div id="nav">
+            <div id="search">
+                    <input  type="search" 
+                            id="search-input" 
+                            name="query"
+                            placeholder=" Search for a movie or phrase... "
+                            aria-label="Look for movies matching string">
+                <button id="clearButton" title="clearSearch" onclick="forClearButton()">Close search</button>
+    
+            </div>
+            
+            <h1 id="siteTitle" >FLIXSTER</h1>
+            <div id="scrollDiv">
+                <button class='button' id="scrollButton" title="scrollUp" onclick="scrollToTop()">Scroll to top</button>
+
+            </div>
+        </div>
+
+        <div id="content">
+            <div id="movies-grid"></div>
+            <div id="allSearchMovies"></div>
+        </div>
+
+        <div id="footer">
+            <div id="movieButtonDiv">
+                <button class='button' id='load-more-movies-btn' type="button" onclick="loadPage()">More movies</button>
+            </div>
+        
+            <div id="searchButtonDiv">
+                <button class='button' id='searchButton' type="button" onclick="loadSearchPage()">More search results</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
