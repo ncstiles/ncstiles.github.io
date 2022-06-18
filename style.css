@@ -14,6 +14,28 @@ div {
     display:grid;
 }
 
+#trailerCard {
+    display: none;
+    place-items: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    top: 0;
+}
+
+
+.embeddedVideo {
+    margin:auto;
+    margin-top: 20px;
+    display: grid;
+    place-items: center;
+    height: 50%;
+    width: 50%;
+    border-radius: 7px;
+
+}
 
 #movies-grid, #allSearchMovies{
     padding: 10px;
@@ -24,14 +46,15 @@ div {
 
 .movie-card{
     grid-template-rows: 7fr 1fr;
-    margin: 0px;
-    grid-gap: 10px;
+    margin-bottom: 20px;
+    grid-gap: px;
 }
 
 .movieInfo {
     grid-template-columns: 8fr 2fr;
     color: rgb(233, 230, 230);
-    /* margin: 0px; */
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .movie-title {
@@ -93,7 +116,6 @@ div {
     margin-right: 10px;
 }
 
-
 .searchForm {
     /* width: 347px; */
     /* margin: auto; */
@@ -123,6 +145,7 @@ div {
     min-width: 300px;
     font-size:15px;
     text-align: center; 
+    margin-top: 20px;
     border: 0px;
 }
 
@@ -130,6 +153,7 @@ div {
     margin-left: auto;
     margin-right: 0px;
     border: 0px;
+    margin-top: 0px;
 }
 
 #clearButton {
@@ -143,16 +167,45 @@ div {
     border: 0px;
 }
 
+
+.popupButton {
+    display: grid;
+    width: 200px;
+    height: 40px;
+    text-decoration:none; 
+    border-radius: 2em;
+    min-width: 300px;
+    font-size:15px;
+    text-align: center; 
+    border: 0px;
+    background-color: #202327;
+    color:#fff;
+    margin: auto;
+    place-items: center;
+
+}
+
 #load-more-movies-btn, #searchButton {
     margin-left: auto;
     margin-right: auto;
 }
 
-#load-more-movies-btn:hover, #searchButton:hover, #scrollButton:hover {
+#load-more-movies-btn:hover, #searchButton:hover, #scrollButton:hover, .videoButton:hover, .popupButton:hover{
     color: #fff;;
     background-color:#9d9999;
     border-color: #fff;
     border-width: 2px;
+}
+
+.videoButton {
+    background-color: #fff;
+    width: 140px;
+    height: 25px;
+    text-decoration:none; 
+    border-radius: 2em;
+    font-size:15px;
+    text-align: center; 
+    margin: 0px auto;
 }
 
 #siteTitle {
@@ -173,27 +226,31 @@ div {
 }
 
 #nav {
-    /* grid-template-columns: 7fr 1fr; */
     grid-template-columns: repeat(3, 1fr);
     position: sticky; 
     top: 0;
-    z-index: 9999;
+    z-index: 5;
     background-color: rgb(69, 68, 67);
     padding: 15px 10px 15px 10px;
     border-radius: 0% 0% 7px 7px;
     opacity: 0.95;
 }
+@media (max-width: 400) {
+    nav {
+        display: flex;
+    }
+  }
 
 #footer {
+    grid-template-columns: 1fr;
     position: sticky;
     bottom: 0px;
-    z-index: 9999;
+    z-index: 5;
     background-color: rgb(69, 68, 67);
     padding: 15px 10px 15px 10px;
     border-radius: 7px 7px 0% 0% ;
     opacity: 0.95;
 
 }
-
 
 

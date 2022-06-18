@@ -7,6 +7,7 @@ let titles = [];
 let imgPaths = [];
 let ratings = [];
 let overviews = [];
+let ids = [];
 
 
 //TODO:remember after the search field is cleared to clear these arrays to save space
@@ -15,6 +16,7 @@ let searchTitles = [];
 let searchImgPaths = [];
 let searchRatings = [];
 let searchOverviews = [];
+let searchIds = [];
 
 let textEntered = false;
 let submitted = false;
@@ -25,6 +27,7 @@ let submitted = false;
  * @returns an object literal containing the title, movie, rating and overview of recent movies
  */
 async function getMovieData() {
+    console.log('getting movie data');
     const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}`;
 
     const results = await getData(url);
@@ -32,6 +35,8 @@ async function getMovieData() {
 }
 
 async function getSearchData(query) {
+    console.log('getting search movie data');
+
     const url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=en-US&query=${query}`;
 
     const results = await getData(url);
@@ -48,11 +53,12 @@ async function getSearchData(query) {
  *          Info at elt `i` in any of these arrays corresponds to the same movie.
  */
 async function getData(url) {
+    console.log('getting data');
     const newTitles = [];
     const imgPathPiece = [];
     const newRatings = [];
     const newOverviews = [];
-
+    const newIds = [];
 
     const response = await fetch(url);
     const mainPage = await response.json();
@@ -79,14 +85,15 @@ async function getData(url) {
                 imgPathPiece.push(movie['poster_path']);  
                 newRatings.push(movie['vote_average']);   
                 newOverviews.push(movie['overview']);
+                newIds.push(movie['id']);
+                console.log('pushing a movie');
             } 
         }
     }
 
     console.log('length of non-null image results', newTitles.length);
     // console.log('number of results matches:', titles.length === numMovies);
-    
-    return { newTitles, imgPathPiece, newRatings, newOverviews }; 
+    return { newTitles, imgPathPiece, newRatings, newOverviews, newIds }; 
 
 }
 
@@ -128,9 +135,9 @@ function genImgPath(base, possiblePosterSizes, specificPaths) {
     return fullPaths;
 }
 
-function loadPage() {
+async function loadPage() {
     const containerId = 'movies-grid';
-    displayPage(numLoads, imgPaths, titles, ratings, overviews, containerId);
+    await displayPage(numLoads, imgPaths, titles, ratings, overviews, ids, containerId);
 
     numLoads += 1;
     console.log('current normal mode page number', numLoads-1);
@@ -141,11 +148,11 @@ function loadPage() {
     }
 }
 
-function loadSearchPage() {
+async function loadSearchPage() {
     console.log('within loadsearchpage');
     const containerId = 'allSearchMovies';
     console.log('search titles length:', searchTitles.length);
-    displayPage(numSearchLoads, searchImgPaths, searchTitles, searchRatings, searchOverviews, containerId);
+    await displayPage(numSearchLoads, searchImgPaths, searchTitles, searchRatings, searchOverviews, searchIds, containerId);
 
     numSearchLoads += 1;
     console.log('current search page number:', numSearchLoads);
@@ -155,7 +162,7 @@ function loadSearchPage() {
         console.log('trying to hide the search button', 'searchtitles length', searchTitles.length);
         // searchButton.style.visibility = 'hidden';  //choosing hidden to not shift the movie imgs up
         searchButton.classList.add('disabled'); //choosing hidden to not shift the movie imgs up
-
+s
     }
 }
 
@@ -163,7 +170,7 @@ function loadSearchPage() {
 /**
  * Given the page number and under the assumption that each page contains 24 movies, appends the 24 movies information to the website
  */
-function displayPage(pageIx, imgArr, titlesArr, ratingsArr, overviewsArr, mainContainer) {
+async function displayPage(pageIx, imgArr, titlesArr, ratingsArr, overviewsArr, idsArr, mainContainer) {
     // TODO: assert(imgPaths.length === titles.length === ratings.length);
     console.log('\n');
     console.log('pageIx:', pageIx);
@@ -172,12 +179,17 @@ function displayPage(pageIx, imgArr, titlesArr, ratingsArr, overviewsArr, mainCo
     const pageImgPaths = imgArr.slice(startingIx, Math.min(imgArr.length, endingIx));
     const pageTitles = titlesArr.slice(startingIx, Math.min(titlesArr.length, endingIx));
     const pageRatings = ratingsArr.slice(startingIx, Math.min(ratingsArr.length, endingIx));
-    const pageOverViews = overviewsArr.slice(startingIx, Math.min(overviewsArr.length, endingIx));
-
+    const pageOverviews = overviewsArr.slice(startingIx, Math.min(overviewsArr.length, endingIx));
+    const pageIds = idsArr.slice(startingIx, Math.min(overviewsArr.length, endingIx));
+    console.log('page Ix', pageIx)
     console.log('starting and ending index:', startingIx, endingIx);
-    let zip = (a, b, c, d) => a.map((elt,i) => [elt, b[i], c[i], d[i]]);
+    let zip = (a, b, c, d, e) => a.map((elt,i) => [elt, b[i], c[i], d[i], e[i]]);
 
-    for (let [imgPath, title, rating, overview] of zip(pageImgPaths, pageTitles, pageRatings, overviews)) {
+    
+    const trailerCard = document.getElementById('trailerCard');
+
+
+    for (let [imgPath, title, rating, overview, id] of zip(pageImgPaths, pageTitles, pageRatings, pageOverviews, pageIds)) {
         const singleMovieDiv = document.createElement('div');
         singleMovieDiv.className = 'movie-card';
 
@@ -216,6 +228,36 @@ function displayPage(pageIx, imgArr, titlesArr, ratingsArr, overviewsArr, mainCo
         ratingTag.className = 'movie-votes';
         infoWrapper.appendChild(ratingTag);
 
+        const videoLink = await getYoutubeHTML(id);
+
+        singleMovieDiv.addEventListener("click", () => {
+            console.log('clicked');
+
+            //add video
+            const videoTag = document.createElement("iframe");
+            videoTag.className = 'embeddedVideo';
+            console.log('video link:', videoLink);
+            videoTag.src = videoLink;
+            console.log('videotag created');
+
+            //add popup close button
+            const videoButton = document.createElement('button');
+            videoButton.innerHTML = 'Close trailer';
+            videoButton.classList.add('popupButton');
+
+            videoButton.addEventListener('click', () =>{
+                trailerCard.innerHTML = '';
+                trailerCard.style.display = 'none';
+            })
+
+            trailerCard.innerHTML = '';
+            trailerCard.append(videoTag);
+            trailerCard.append(videoButton);
+
+            trailerCard.style.display = 'block';
+
+
+        });
         const div = document.getElementById(mainContainer);
 
         singleMovieDiv.appendChild(imgWrapper); 
@@ -226,6 +268,29 @@ function displayPage(pageIx, imgArr, titlesArr, ratingsArr, overviewsArr, mainCo
 
 }
 
+
+async function getYoutubeHTML(movieId) {
+    url = `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${apiKey}&language=en-US`;
+    
+    const response = await fetch(url);
+    const data = await response.json();
+    // console.log('data results;', data['results']);
+    if (data['results'] && data['results'].length > 0) {
+        for (let potentialVid of data['results']) {
+            // console.log('potentialVidData', potentialVid);
+            if (potentialVid['type'] === 'Trailer') {
+                console.log('link:',`https://www.youtube.com/embed/${potentialVid['key']}` );
+                return `https://www.youtube.com/embed/${potentialVid['key']}`;
+            }
+        }
+        console.log('not trailer found');
+    } 
+    else {
+        console.log('no videos associated with this url');
+        // return 'no images associated with this url';
+    }
+    
+}
 /**
  * Make an API call using the searched term and display the new movies that match
 //  * @param {*} event search event
@@ -242,10 +307,11 @@ async function search() {
     submitted = true;
     event.preventDefault();
     const searchedVal = searchBarElt.value;
-    let { newTitles, imgPathPiece, newRatings, newOverviews } = await getSearchData(searchedVal);
+    let { newTitles, imgPathPiece, newRatings, newOverviews, newIds } = await getSearchData(searchedVal);
     searchTitles = newTitles;
     searchRatings = newRatings;
     searchOverviews = newOverviews;
+    searchIds = newIds;
 
 
     let {baseUrl, possiblePosterSizes } = await imageSetup();
@@ -255,7 +321,7 @@ async function search() {
     searchImgPaths = fullPaths;
     searchedSmth = false;
     numSearchLoads = 0;
-    loadSearchPage();
+    await loadSearchPage();
 }
 
 function clearSearchInfo() {
@@ -298,7 +364,6 @@ function scrollToTop() {
         top: 0,
         behavior: "smooth"
     })
-
 }
 
 function forClearButton() {
@@ -309,16 +374,18 @@ function forClearButton() {
 }
 
 async function main() {
-    let { newTitles, imgPathPiece, newRatings, newOverviews } = await getMovieData();
+    console.log('in main');
+    let { newTitles, imgPathPiece, newRatings, newOverviews, newIds } = await getMovieData();
     titles = newTitles;
     ratings = newRatings;
     overviews = newOverviews;
+    ids = newIds;
 
     let {baseUrl, possiblePosterSizes } = await imageSetup();
     
     const fullPaths = genImgPath(baseUrl, possiblePosterSizes, imgPathPiece);
     imgPaths = fullPaths;
-    loadPage();
+    await loadPage();
 }
 
 window.onload = () => {
@@ -361,7 +428,6 @@ searchBarElt.addEventListener('input', (event) => {
 });
 
 scrollButton.addEventListener('click', scrollToTop);
-
 
 
 
